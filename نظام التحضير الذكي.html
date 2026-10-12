@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>نظام التحضير الذكي</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--ink:#3955DC;--sub:#00A7D8;--accent:#0E977A;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:'Tajawal',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.wrap{width:100%;max-width:420px}
+header{text-align:center;margin-bottom:28px}
+h1{margin:0 0 6px;font-size:28px}
+header p{margin:0;color:var(--sub)}
+.hidden{display:none}
+.roles{display:grid;gap:14px}
+button{font:inherit;color:inherit;cursor:pointer}
+.role{padding:18px;border:2px solid var(--accent);border-radius:8px;background:var(--bg);font-size:18px;font-weight:700;text-align:center}
+.role:hover,.role:focus-visible{background:rgba(14,151,122,.1);outline:none}
+h2{margin:0 0 8px;font-size:20px}
+label{display:block;margin:16px 0 6px;font-weight:500}
+.field{position:relative}
+input{width:100%;padding:13px 14px;border:2px solid var(--accent);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:16px;text-align:left}
+input::placeholder{color:var(--ink);opacity:.45}
+input:focus{outline:3px solid rgba(14,151,122,.3)}
+.eye{position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:0;font-size:14px;text-decoration:underline;color:var(--sub)}
+.btn{width:100%;margin-top:22px;padding:14px;border:2px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--bg);font-size:17px;font-weight:700}
+.back{background:none;border:0;padding:0;margin-bottom:14px;text-decoration:underline;color:var(--sub)}
+.msg{margin-top:14px;text-align:center;min-height:22px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>نظام التحضير الذكي</h1>
+    <p>سجّل حضورك عبر رمز QR</p>
+    <p id="sub" style="margin-top:18px">اختر نوع الحساب للمتابعة</p>
+  </header>
+
+  <div id="roleView" class="roles">
+    <button class="role" data-role="عضو هيئة تدريس">عضو هيئة تدريس</button>
+    <button class="role" data-role="طالب جامعي">طالب جامعي</button>
+  </div>
+
+  <div id="loginView" class="hidden">
+    <button class="back" id="back" type="button">رجوع</button>
+    <h2 id="title"></h2>
+    <label for="email">الايميل الجامعي:</label>
+    <input id="email" type="email" dir="ltr" placeholder="name@university.edu" autocomplete="username">
+    <label for="pass">كلمة المرور:</label>
+    <div class="field">
+      <input id="pass" type="password" dir="ltr" autocomplete="current-password">
+      <button class="eye" id="eye" type="button">إظهار</button>
+    </div>
+    <button class="btn" id="go" type="button">تسجيل الدخول</button>
+    <div class="msg" id="msg"></div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let role="";
+document.querySelectorAll('.role').forEach(b=>b.onclick=()=>{
+  role=b.dataset.role;
+  $('title').textContent="تسجيل دخول: "+role;
+  $('sub').classList.add('hidden');
+  $('roleView').classList.add('hidden');
+  $('loginView').classList.remove('hidden');
+  $('email').focus();
+});
+$('back').onclick=()=>{
+  $('loginView').classList.add('hidden');
+  $('roleView').classList.remove('hidden');
+  $('sub').classList.remove('hidden');
+  $('msg').textContent="";
+};
+$('eye').onclick=()=>{
+  const h=$('pass').type==='password';
+  $('pass').type=h?'text':'password';
+  $('eye').textContent=h?'إخفاء':'إظهار';
+};
+function login(){
+  const m=$('msg'),e=$('email').value.trim(),p=$('pass').value;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){m.textContent="الرجاء إدخال ايميل جامعي صحيح";return}
+  if(p.length<6){m.textContent="كلمة المرور يجب ألا تقل عن 6 أحرف";return}
+  m.textContent="تم تسجيل الدخول بنجاح ("+role+") - نسخة تجريبية";
+}
+$('go').onclick=login;
+['email','pass'].forEach(i=>$(i).addEventListener('keydown',ev=>{if(ev.key==='Enter')login()}));
+</script>
+</body>
+</html>

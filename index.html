@@ -89,7 +89,7 @@ KG6wiu9TywjsZKgnZN7YDTlPDWEBkC5ZlVP9c0CxgCCaBwxNP7innVXbZpOr7QIMiUfyCvr7bhv1ZrKs
     <div id="loginView" class="hidden">
       <button class="back" id="back" type="button">رجوع</button>
       <h2 id="title"></h2>
-      <label for="email">الايميل الجامعي:</label>
+      <label for="email">الرقم الجامعي:</label>
       <input id="email" type="text" dir="ltr" placeholder="test" autocomplete="username">
       <label for="pass">كلمة المرور:</label>
       <div class="field-wrap">
@@ -172,7 +172,7 @@ let currentRole = 'student';
 let currentPage = 'home';
 let toastTimer;
 const ROLE_INFO = {
-  student: {label:'طالب جامعي', short:'الطالب', name:'فيصل صالح الحربي', icon:'ط'},
+  student: {label:'طالب جامعي', short:'الطالب', name:'فيصل صلاح الحربي', icon:'ط'},
   instructor: {label:'عضو هيئة تدريس', short:'عضو هيئة تدريس', name:'حسام الفحل', icon:'ع'},
   admin: {label:'مسؤول النظام', short:'المسؤول', name:'مسؤول النظام', icon:'م'}
 };
@@ -182,57 +182,68 @@ const NAV = {
  admin:[['home','⌂','الرئيسية'],['management','♙','إدارة البيانات'],['courses','▤','المقررات'],['reports','▥','التقارير'],['settings','⚙','الإعدادات']]
 };
 const DEMO_COURSES = [
- {id:'IS321',name:'تحليل وتصميم النظم',section:'شعبة 1',instructor:'حسام الفحل',lectures:12,absent:2},
- {id:'IS322',name:'قواعد البيانات',section:'شعبة 2',instructor:'فهد الدوسري',lectures:10,absent:6},
- {id:'IS341',name:'إدارة مشاريع نظم المعلومات',section:'شعبة 1',instructor:'عمر الطحطوح',lectures:9,absent:8}
+ {id:'MIS492',code:'MIS492',name:'مشروع في نظم المعلومات الادارية',section:'M2',instructor:'حسام الفحل',lectures:12,absent:2},
+ {id:'MIS492-M3',code:'MIS492',name:'مشروع في نظم المعلومات الادارية',section:'M3',instructor:'حسام الفحل',lectures:10,absent:0},
+ {id:'QUA301',name:'مقدمة في علم الإدارة',section:'شعبة 2',instructor:'مسعد الرشيدي',lectures:10,absent:6},
+ {id:'MIS442',name:'نظم دعم الادارة',section:'شعبة 1',instructor:'طارق الشعري',lectures:9,absent:8}
 ];
 const DEMO_STUDENTS = [
- {id:'4401186',name:'فيصل صالح الحربي',email:'test',course:'IS321'},
- {id:'4401982',name:'نواف حامد العمري',email:'student2@taibahu.edu.sa',course:'IS321'},
- {id:'4420140',name:'عبدالله صالح الحربي',email:'student3@taibahu.edu.sa',course:'IS321'},
- {id:'4307093',name:'منصور عبدالدائم العبدالدائم',email:'student4@taibahu.edu.sa',course:'IS321'},
- {id:'4404894',name:'محمد ناصر العمري',email:'student5@taibahu.edu.sa',course:'IS322'}
+ {id:'4401186',name:'فيصل صلاح الحربي',course:'MIS492'},
+ {id:'4401982',name:'نواف حامد العمري',course:'MIS492'},
+ {id:'4420140',name:'عبدالله صالح الحربي',course:'MIS492'},
+ {id:'4400029',name:'وليد سعود الحربي',course:'MIS492'},
+ {id:'4307093',name:'منصور عبدالدائم العبدالدائم',course:'MIS492'},
+ {id:'4404894',name:'محمد ناصر العمري',course:'MIS492'},
+ {id:'4403311',name:'سلطان خالد الجهني',course:'MIS492-M3'},
+ {id:'4405127',name:'ياسر عادل الصاعدي',course:'MIS492-M3'},
+ {id:'4402768',name:'بدر سعد المطيري',course:'MIS492-M3'}
 ];
 const INITIAL_ATTENDANCE = [
- {studentId:'4401186',courseId:'IS321',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'},
- {studentId:'4401186',courseId:'IS321',lecture:'المحاضرة 9',date:'2026-10-25',status:'غائب'},
- {studentId:'4401186',courseId:'IS321',lecture:'المحاضرة 8',date:'2026-10-22',status:'حاضر'},
- {studentId:'4401186',courseId:'IS322',lecture:'المحاضرة 8',date:'2026-10-26',status:'حاضر'},
- {studentId:'4401186',courseId:'IS322',lecture:'المحاضرة 7',date:'2026-10-23',status:'معذور'},
- {studentId:'4401186',courseId:'IS341',lecture:'المحاضرة 6',date:'2026-10-21',status:'حاضر'},
- {studentId:'4401186',courseId:'IS321',lecture:'المحاضرة 7',date:'2026-10-18',status:'غائب'},
- {studentId:'4401186',courseId:'IS321',lecture:'المحاضرة 6',date:'2026-10-15',status:'غائب'},
- {studentId:'4401186',courseId:'IS322',lecture:'المحاضرة 1',date:'2026-09-12',status:'غائب'},
- {studentId:'4401186',courseId:'IS322',lecture:'المحاضرة 2',date:'2026-09-14',status:'غائب'},
- {studentId:'4401186',courseId:'IS322',lecture:'المحاضرة 3',date:'2026-09-16',status:'غائب'},
- {studentId:'4401186',courseId:'IS322',lecture:'المحاضرة 4',date:'2026-09-18',status:'غائب'},
- {studentId:'4401186',courseId:'IS322',lecture:'المحاضرة 5',date:'2026-09-20',status:'غائب'},
- {studentId:'4401186',courseId:'IS322',lecture:'المحاضرة 6',date:'2026-09-22',status:'غائب'},
- {studentId:'4401186',courseId:'IS341',lecture:'المحاضرة 1',date:'2026-09-08',status:'غائب'},
- {studentId:'4401186',courseId:'IS341',lecture:'المحاضرة 2',date:'2026-09-10',status:'غائب'},
- {studentId:'4401186',courseId:'IS341',lecture:'المحاضرة 3',date:'2026-09-12',status:'غائب'},
- {studentId:'4401186',courseId:'IS341',lecture:'المحاضرة 4',date:'2026-09-14',status:'غائب'},
- {studentId:'4401186',courseId:'IS341',lecture:'المحاضرة 5',date:'2026-09-16',status:'غائب'},
- {studentId:'4401186',courseId:'IS341',lecture:'المحاضرة 7',date:'2026-09-18',status:'غائب'},
- {studentId:'4401186',courseId:'IS341',lecture:'المحاضرة 8',date:'2026-09-20',status:'غائب'},
- {studentId:'4401186',courseId:'IS341',lecture:'المحاضرة 9',date:'2026-09-22',status:'غائب'},
- {studentId:'4401982',courseId:'IS321',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'},
- {studentId:'4420140',courseId:'IS321',lecture:'المحاضرة 10',date:'2026-10-27',status:'غائب'},
- {studentId:'4307093',courseId:'IS321',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'}
+ {studentId:'4400029',courseId:'MIS492',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'},
+ {studentId:'4404894',courseId:'MIS492',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'},
+ {studentId:'4403311',courseId:'MIS492-M3',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'},
+ {studentId:'4405127',courseId:'MIS492-M3',lecture:'المحاضرة 10',date:'2026-10-27',status:'غائب'},
+ {studentId:'4402768',courseId:'MIS492-M3',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'},
+ {studentId:'4405127',courseId:'MIS492-M3',lecture:'المحاضرة 9',date:'2026-10-25',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS492',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'},
+ {studentId:'4401186',courseId:'MIS492',lecture:'المحاضرة 9',date:'2026-10-25',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS492',lecture:'المحاضرة 8',date:'2026-10-22',status:'حاضر'},
+ {studentId:'4401186',courseId:'QUA301',lecture:'المحاضرة 8',date:'2026-10-26',status:'حاضر'},
+ {studentId:'4401186',courseId:'QUA301',lecture:'المحاضرة 7',date:'2026-10-23',status:'معذور'},
+ {studentId:'4401186',courseId:'MIS442',lecture:'المحاضرة 6',date:'2026-10-21',status:'حاضر'},
+ {studentId:'4401186',courseId:'MIS492',lecture:'المحاضرة 7',date:'2026-10-18',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS492',lecture:'المحاضرة 6',date:'2026-10-15',status:'غائب'},
+ {studentId:'4401186',courseId:'QUA301',lecture:'المحاضرة 1',date:'2026-09-12',status:'غائب'},
+ {studentId:'4401186',courseId:'QUA301',lecture:'المحاضرة 2',date:'2026-09-14',status:'غائب'},
+ {studentId:'4401186',courseId:'QUA301',lecture:'المحاضرة 3',date:'2026-09-16',status:'غائب'},
+ {studentId:'4401186',courseId:'QUA301',lecture:'المحاضرة 4',date:'2026-09-18',status:'غائب'},
+ {studentId:'4401186',courseId:'QUA301',lecture:'المحاضرة 5',date:'2026-09-20',status:'غائب'},
+ {studentId:'4401186',courseId:'QUA301',lecture:'المحاضرة 6',date:'2026-09-22',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS442',lecture:'المحاضرة 1',date:'2026-09-08',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS442',lecture:'المحاضرة 2',date:'2026-09-10',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS442',lecture:'المحاضرة 3',date:'2026-09-12',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS442',lecture:'المحاضرة 4',date:'2026-09-14',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS442',lecture:'المحاضرة 5',date:'2026-09-16',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS442',lecture:'المحاضرة 7',date:'2026-09-18',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS442',lecture:'المحاضرة 8',date:'2026-09-20',status:'غائب'},
+ {studentId:'4401186',courseId:'MIS442',lecture:'المحاضرة 9',date:'2026-09-22',status:'غائب'},
+ {studentId:'4401982',courseId:'MIS492',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'},
+ {studentId:'4420140',courseId:'MIS492',lecture:'المحاضرة 10',date:'2026-10-27',status:'غائب'},
+ {studentId:'4307093',courseId:'MIS492',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'}
 ];
 function loadState(){
  try {
-  const saved=JSON.parse(localStorage.getItem('smartAttendanceV3')||'null');
+  const saved=JSON.parse(localStorage.getItem('smartAttendanceV6')||'null');
   if(saved && Array.isArray(saved.attendance) && Array.isArray(saved.students) && Array.isArray(saved.courses)) {
-   const faculty=['حسام الفحل','فهد الدوسري','عمر الطحطوح'];
-   const byCourse={IS321:'حسام الفحل',IS322:'فهد الدوسري',IS341:'عمر الطحطوح'};
+   const faculty=['حسام الفحل','مسعد الرشيدي','طارق الشعري'];
+   const byCourse={MIS492:'حسام الفحل','MIS492-M3':'حسام الفحل',QUA301:'مسعد الرشيدي',MIS442:'طارق الشعري'};
    return {...saved,semesterLectures:saved.semesterLectures||28,session:saved.session||null,courses:saved.courses.map((c,i)=>({...c,instructor:byCourse[c.id]||faculty[i%faculty.length]}))};
   }
  } catch(e) {}
  return {attendance:INITIAL_ATTENDANCE.map(x=>({...x})), students:DEMO_STUDENTS.map(x=>({...x})), courses:DEMO_COURSES.map(x=>({...x})), threshold:25, semesterLectures:28, alertsEnabled:true, session:null};
 }
 let state=loadState();
-function persist(){try{localStorage.setItem('smartAttendanceV3',JSON.stringify(state));}catch(e){}}
+function persist(){try{localStorage.setItem('smartAttendanceV6',JSON.stringify(state));}catch(e){}}
 function showToast(text){$('toast').textContent=text;$('toast').classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.add('hidden'),2600)}
 function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function todayArabic(){return new Intl.DateTimeFormat('ar-SA',{dateStyle:'full'}).format(new Date())}
@@ -302,39 +313,45 @@ function studentStats(courseId){
  const total=records.length;return {records,absent,attended,excused,total,percent:pct(absent)};
 }
 function absTxt(n){return n===0?'لا غياب':n===1?'غياب واحد':n===2?'غيابان':n<=10?n+' غيابات':n+' غيابًا'}
+function codeOf(c){return c.code||c.id}
+function courseLabel(id){const c=state.courses.find(x=>x.id===id);return c?codeOf(c)+' · '+c.section:(id||'—')}
+function myCourses(){return currentRole==='instructor'?state.courses.filter(c=>c.instructor===ROLE_INFO.instructor.name):currentRole==='student'?state.courses.filter(c=>enrolled(c.id).some(s=>s.id===getStudent().id)):state.courses}
+function myAttendance(){const ids=myCourses().map(c=>c.id);return state.attendance.filter(a=>ids.includes(a.courseId))}
+function enrolled(id){return state.students.filter(s=>s.course===id||state.attendance.some(a=>a.studentId===s.id&&a.courseId===id))}
+function myStudents(){const ids=myCourses().map(c=>c.id);return state.students.filter(s=>ids.some(id=>enrolled(id).includes(s)))}
 function pct(n){return +(n/state.semesterLectures*100).toFixed(1)}
 function maxAbs(){return Math.floor(state.semesterLectures*state.threshold/100)}
 function courseRisk(id){const a=studentStats(id).absent,m=maxAbs();return a>m?'deprived':a===m?'limit':a>=m-2?'warn':'ok'}
 function studentCourseCard(course){
  const s=studentStats(course.id);const n=s.percent,m=maxAbs(),r=courseRisk(course.id);const danger=r==='deprived';const warn=r==='limit'||r==='warn';
- return `<div class="course-row"><div class="course-icon">${ic('▤')}</div><div class="course-info"><b>${esc(course.name)}</b><small>${esc(course.id)} · ${esc(course.section)} · ${esc(course.instructor)}</small><div class="bar ${danger?'danger':warn?'warn':''}"><span style="width:${Math.max(2,Math.min(100,Math.round(s.absent/Math.max(1,m)*100)))}%"></span></div></div><div class="percent"><span>${n}%</span><div class="small">${absTxt(s.absent)}</div>${danger?'<span class="badge red">حرمان</span>':''}</div></div>`;
+ return `<div class="course-row"><div class="course-icon">${ic('▤')}</div><div class="course-info"><b>${esc(course.name)}</b><small>${esc(codeOf(course))} · ${esc(course.section)} · ${esc(course.instructor)}</small><div class="bar ${danger?'danger':warn?'warn':''}"><span style="width:${Math.max(2,Math.min(100,Math.round(s.absent/Math.max(1,m)*100)))}%"></span></div></div><div class="percent"><span>${n}%</span><div class="small">${absTxt(s.absent)}</div>${danger?'<span class="badge red">حرمان</span>':''}</div></div>`;
 }
 function homeStudent(){
- const s=studentStats(), enrolled=state.courses.length, alerts=state.alertsEnabled?state.courses.filter(c=>courseRisk(c.id)!=='ok').length:0;
+ const s=studentStats(), enrolled=myCourses().length, alerts=state.alertsEnabled?myCourses().filter(c=>courseRisk(c.id)!=='ok').length:0;
  return pageHead('مرحبًا بك في نظام التحضير الذكي','لوحة الطالب: متابعة المقررات وسجل الحضور والتنبيهات.')+
  `<div class="stats">${stat('المقررات المسجلة',enrolled,'▤','إجمالي المقررات')}${stat('حالات الحضور',s.attended,'✓','إجمالي السجلات المسجلة','green')}${stat('حالات الغياب',s.absent,'!','تحتسب من السجل','red')}${stat('التنبيهات',alerts,'♢',state.alertsEnabled?'بحسب إعدادات النظام':'التنبيهات معطلة','amber')}</div>`+
- `<div class="grid2"><section class="panel"><div class="panel-head"><h3>ملخص المقررات</h3><button class="table-action" data-goto="courses">عرض الكل</button></div><div class="course-list">${state.courses.map(studentCourseCard).join('')}</div></section><section class="panel"><div class="panel-head"><h3>التنبيهات والملاحظات</h3></div>${studentAlertMarkup()}<div class="muted" style="margin-top:12px">يُحرم الطالب إذا تجاوز غيابه ${state.threshold}% من المحاضرات</div></section></div>`;
+ `<div class="grid2"><section class="panel"><div class="panel-head"><h3>ملخص المقررات</h3><button class="table-action" data-goto="courses">عرض الكل</button></div><div class="course-list">${myCourses().map(studentCourseCard).join('')}</div></section><section class="panel"><div class="panel-head"><h3>التنبيهات والملاحظات</h3></div>${studentAlertMarkup()}<div class="muted" style="margin-top:12px">يُحرم الطالب إذا تجاوز غيابه ${state.threshold}% من المحاضرات</div></section></div>`;
 }
 function studentAlertMarkup(){
  if(!state.alertsEnabled)return '<div class="alert info">التنبيهات غير مفعلة حاليًا.</div>';
- const m=maxAbs(),items=state.courses.map(c=>({c,r:courseRisk(c.id),a:studentStats(c.id).absent})).filter(x=>x.r!=='ok');
+ const m=maxAbs(),items=myCourses().map(c=>({c,r:courseRisk(c.id),a:studentStats(c.id).absent})).filter(x=>x.r!=='ok');
  if(!items.length)return '<div class="alert success">لا توجد مقررات اقتربت من حد الحرمان.</div>';
  return items.map(({c,r,a})=>r==='deprived'?`<div class="alert danger">تجاوزت حد الغياب في مقرر <b>${esc(c.name)}</b> (${absTxt(a)}، ${pct(a)}%) وأصبحت محرومًا من المقرر.</div>`:r==='limit'?`<div class="alert warning">وصلت إلى الحد الأقصى للغياب في مقرر <b>${esc(c.name)}</b> (${absTxt(a)}، ${pct(a)}%). أي غياب إضافي يعني الحرمان.</div>`:`<div class="alert warning">غيابك في مقرر <b>${esc(c.name)}</b> ${absTxt(a)} (${pct(a)}%)، واقتربت من حد الحرمان.</div>`).join('');
 }
 function homeInstructor(){
- const todays=state.attendance.filter(a=>a.date==='2026-10-27').length;
+ const todays=myAttendance().filter(a=>a.date==='2026-10-27').length;
  return pageHead('لوحة عضو هيئة التدريس','إدارة جلسات التحضير ومراجعة حالات الطلاب وإصدار التقارير.',`<button class="primary" data-goto="session">فتح جلسة تحضير</button>`)+
- `<div class="stats">${stat('المقررات',state.courses.length,'▤','مقررات مسندة')}${stat('الطلاب',state.students.length,'♙','طلاب مسجلون')}${stat('سجلات اليوم',todays,'✓','إجمالي اليوم','green')}${stat('جلسة التحضير','جاهزة','◉','يمكن فتح جلسة جديدة','amber')}</div>`+
- `<div class="grid2"><section class="panel"><div class="panel-head"><h3>المقررات المسندة</h3><button class="table-action" data-goto="courses">التفاصيل</button></div><div class="course-list">${state.courses.map(c=>`<div class="course-row"><div class="course-icon">${ic('▤')}</div><div class="course-info"><b>${esc(c.name)}</b><small>${esc(c.id)} · ${esc(c.section)}</small></div><button class="secondary" data-start-course="${esc(c.id)}">فتح التحضير</button></div>`).join('')}</div></section><section class="panel"><h3>خطوات الجلسة</h3><div class="alert info">1. اختر المقرر والمحاضرة.</div><div class="alert info">2. افتح جلسة التحضير واعرض رمز QR للطلاب.</div><div class="alert info">3. راجع حالة كل طالب واحفظ السجل.</div></section></div>`;
+ `<div class="stats">${stat('المقررات',myCourses().length,'▤','مقررات مسندة')}${stat('الطلاب',myStudents().length,'♙','طلاب مسجلون')}${stat('سجلات اليوم',todays,'✓','إجمالي اليوم','green')}${stat('جلسة التحضير','جاهزة','◉','يمكن فتح جلسة جديدة','amber')}</div>`+
+ `<div class="grid2"><section class="panel"><div class="panel-head"><h3>المقررات المسندة</h3><button class="table-action" data-goto="courses">التفاصيل</button></div><div class="course-list">${myCourses().map(c=>`<div class="course-row"><div class="course-icon">${ic('▤')}</div><div class="course-info"><b>${esc(c.name)}</b><small>${esc(codeOf(c))} · ${esc(c.section)}</small></div><button class="secondary" data-start-course="${esc(c.id)}">فتح التحضير</button></div>`).join('')}</div></section><section class="panel"><h3>خطوات الجلسة</h3><div class="alert info">1. اختر المقرر والمحاضرة.</div><div class="alert info">2. افتح جلسة التحضير واعرض رمز QR للطلاب.</div><div class="alert info">3. راجع حالة كل طالب واحفظ السجل.</div></section></div>`;
 }
 function homeAdmin(){
  return pageHead('لوحة مسؤول النظام','إدارة البيانات الأساسية وضبط حد الغياب ومراجعة المخرجات.')+
  `<div class="stats">${stat('الطلاب',state.students.length,'♙','إجمالي الطلاب')}${stat('المقررات',state.courses.length,'▤','إجمالي المقررات')}${stat('سجلات الحضور',state.attendance.length,'▦','إجمالي السجلات','green')}${stat('حد الغياب',state.threshold+'%','⚙',maxAbs()+' غيابات للمقرر','amber')}</div>`+
- `<section class="panel"><div class="panel-head"><h3>الإدارة السريعة</h3></div><div class="course-list"><div class="course-row"><div class="course-icon">${ic('♙')}</div><div class="course-info"><b>إدارة الطلاب</b><small>الرقم الجامعي والاسم والبريد</small></div><button class="secondary" data-goto="management">فتح</button></div><div class="course-row"><div class="course-icon">${ic('▤')}</div><div class="course-info"><b>إدارة المقررات</b><small>المقرر والشعبة وعضو هيئة التدريس</small></div><button class="secondary" data-goto="courses">فتح</button></div><div class="course-row"><div class="course-icon">${ic('⚙')}</div><div class="course-info"><b>إعدادات النظام</b><small>حد الغياب وتشغيل التنبيهات</small></div><button class="secondary" data-goto="settings">فتح</button></div></div></section>`;
+ `<section class="panel"><div class="panel-head"><h3>الإدارة السريعة</h3></div><div class="course-list"><div class="course-row"><div class="course-icon">${ic('♙')}</div><div class="course-info"><b>إدارة الطلاب</b><small>الرقم الجامعي والاسم والمقرر</small></div><button class="secondary" data-goto="management">فتح</button></div><div class="course-row"><div class="course-icon">${ic('▤')}</div><div class="course-info"><b>إدارة المقررات</b><small>المقرر والشعبة وعضو هيئة التدريس</small></div><button class="secondary" data-goto="courses">فتح</button></div><div class="course-row"><div class="course-icon">${ic('⚙')}</div><div class="course-info"><b>إعدادات النظام</b><small>حد الغياب وتشغيل التنبيهات</small></div><button class="secondary" data-goto="settings">فتح</button></div></div></section>`;
 }
 function recordsTable(records,role='student'){
  const ins=role==='instructor';
- const rows=[...records].sort((x,y)=>y.date.localeCompare(x.date)).map(a=>{const stud=state.students.find(s=>s.id===a.studentId)||{name:'طالب',id:a.studentId};const course=state.courses.find(c=>c.id===a.courseId)||{name:a.courseId};return `<tr>${ins?`<td>${esc(stud.name)}</td>`:''}<td>${esc(course.name)}</td><td>${esc(a.lecture)}</td><td>${esc(a.date)}</td><td>${statusBadge(a.status)}</td>${ins?`<td><button class="table-action" data-edit-attendance="${esc(a.studentId)}|${esc(a.courseId)}|${esc(a.lecture)}">تعديل الحالة</button></td>`:''}</tr>`}).join('');
+ const rows=[...records].sort((x,y)=>y.date.localeCompare(x.date)).map(a=>{const stud=state.students.find(s=>s.id===a.studentId)||{name:'طالب',id:a.studentId};const course=state.courses.find(c=>c.id===a.courseId)||{name:a.courseId};return `<tr>${ins?`<td>${esc(stud.name)}</td>`:''}<td>${esc(course.name)}${ins&&course.section?' ('+esc(course.section)+')':''}</td><td>${esc(a.lecture)}</td><td>${esc(a.date)}</td><td>${statusBadge(a.status)}</td>${ins?`<td><button class="table-action" data-edit-attendance="${esc(a.studentId)}|${esc(a.courseId)}|${esc(a.lecture)}">تعديل الحالة</button></td>`:''}</tr>`}).join('');
  return `<div class="table-wrap"><table><thead><tr>${ins?'<th>الطالب</th>':''}<th>المقرر</th><th>المحاضرة</th><th>التاريخ</th><th>الحالة</th>${ins?'<th>إجراء</th>':''}</tr></thead><tbody>${rows||`<tr><td colspan="${ins?6:4}" class="center">لا توجد سجلات لعرضها.</td></tr>`}</tbody></table></div>`;
 }
 function pageAttendance(){
@@ -343,29 +360,29 @@ function pageAttendance(){
   return pageHead('سجل الحضور والغياب','عرض سجل الطالب وحالات المحاضرات.')+
   `<div class="stats">${stat('إجمالي السجلات',s.total,'▦','كل المقررات')}${stat('حاضر',s.attended,'✓','حضور مسجل','green')}${stat('غائب',s.absent,'!','غياب مسجل','red')}${stat('معذور',s.excused,'◇','حالات بعذر','amber')}</div><section class="panel"><div class="panel-head"><h3>تفاصيل السجل</h3></div>${recordsTable(s.records)}</section>`;
  }
- const rec=state.attendance;
+ const rec=myAttendance();
  return pageHead('سجل الحضور والغياب','مراجعة حالات الحضور المسجلة وتعديلها ضمن صلاحية عضو هيئة التدريس.')+
  `<section class="panel"><div class="panel-head"><h3>السجلات المسجلة</h3><button class="primary" data-goto="session">تسجيل جلسة التحضير</button></div>${recordsTable(rec,'instructor')}</section>`;
 }
 function pageCourses(){
  const showTeacher=currentRole!=='student';
  return pageHead(currentRole==='student'?'مقرراتي':'المقررات','قائمة المقررات والشعب المرتبطة بها.')+
- `<section class="panel"><div class="panel-head"><h3>قائمة المقررات</h3>${currentRole==='admin'?'<button class="primary" data-action="add-course">إضافة مقرر</button>':''}</div><div class="table-wrap"><table><thead><tr><th>رمز المقرر</th><th>اسم المقرر</th><th>الشعبة</th>${showTeacher?'<th>عضو هيئة التدريس</th>':'<th>نسبة الغياب</th>'}<th>المحاضرات</th>${currentRole==='instructor'?'<th>إجراء</th>':''}</tr></thead><tbody>${state.courses.map(c=>`<tr><td>${esc(c.id)}</td><td>${esc(c.name)}</td><td>${esc(c.section)}</td>${showTeacher?`<td>${esc(c.instructor)}</td>`:`<td>${absTxt(studentStats(c.id).absent)} (${studentStats(c.id).percent}%)</td>`}<td>${c.lectures}</td>${currentRole==='instructor'?`<td><button class="table-action" data-start-course="${esc(c.id)}">فتح التحضير</button></td>`:''}</tr>`).join('')}</tbody></table></div></section>`;
+ `<section class="panel"><div class="panel-head"><h3>قائمة المقررات</h3>${currentRole==='admin'?'<button class="primary" data-action="add-course">إضافة مقرر</button>':''}</div><div class="table-wrap"><table><thead><tr><th>رمز المقرر</th><th>اسم المقرر</th><th>الشعبة</th>${showTeacher?'<th>عضو هيئة التدريس</th>':'<th>نسبة الغياب</th>'}<th>المحاضرات</th>${currentRole==='instructor'?'<th>إجراء</th>':''}</tr></thead><tbody>${myCourses().map(c=>`<tr><td>${esc(codeOf(c))}</td><td>${esc(c.name)}</td><td>${esc(c.section)}</td>${showTeacher?`<td>${esc(c.instructor)}</td>`:`<td>${absTxt(studentStats(c.id).absent)} (${studentStats(c.id).percent}%)</td>`}<td>${c.lectures}</td>${currentRole==='instructor'?`<td><button class="table-action" data-start-course="${esc(c.id)}">فتح التحضير</button></td>`:''}</tr>`).join('')}</tbody></table></div></section>`;
 }
 function pageSession(){
  if(currentRole==='student')return pageHead('تسجيل الحضور','امسح رمز QR الظاهر لدى عضو هيئة التدريس لتسجيل حضورك.')+
  `<section class="panel center"><h3>مسح رمز الجلسة</h3><p class="muted">وجّه الكاميرا نحو رمز QR المعروض في القاعة.</p><div id="scanArea" class="scan-area"><video id="scanVideo" playsinline muted></video></div><div class="form-actions" style="justify-content:center"><button class="primary" data-action="scan-start">فتح الكاميرا لمسح الرمز</button><button class="secondary" data-action="scan-image">اختيار صورة الرمز</button><input id="qrFile" type="file" accept="image/*" class="hidden"></div><div id="scanMsg" class="muted" style="margin-top:14px" role="status"></div></section>`;
  return pageHead('جلسة التحضير','افتح جلسة للمقرر ثم اعرض رمز QR للطلاب وراجع حالاتهم.')+
- `<div class="grid2"><section class="panel"><h3>إعداد الجلسة</h3><div class="form-grid" style="margin-top:16px"><div class="form-field"><label for="sessionCourse">المقرر</label><select class="field" id="sessionCourse">${state.courses.map(c=>`<option value="${esc(c.id)}">${esc(c.name)} (${esc(c.id)})</option>`).join('')}</select></div><div class="form-field"><label for="sessionLecture">رقم المحاضرة</label><input class="field" id="sessionLecture" value="المحاضرة 11"></div></div><div class="form-actions"><button class="primary" data-action="open-session">فتح جلسة التحضير</button><button class="secondary" data-action="close-session">إغلاق الجلسة</button></div><div id="sessionMessage" class="muted" style="margin-top:12px">لم تُفتح جلسة بعد.</div></section><section class="panel center"><h3>رمز QR للجلسة</h3><div id="qrBox" class="qr-box empty">افتح الجلسة لإظهار الرمز</div><p class="muted">اعرض الرمز للطلاب لإتمام تسجيل الحضور.</p></section></div>
- <section class="panel"><div class="panel-head"><h3>قائمة الطلاب وحالات الحضور</h3><button class="primary" data-action="save-session">حفظ حالات الحضور</button></div><div class="table-wrap"><table><thead><tr><th>الرقم الجامعي</th><th>اسم الطالب</th><th>البريد</th><th>حالة الحضور</th></tr></thead><tbody id="sessionRoster">${renderRosterRows()}</tbody></table></div></section>`;
+ `<div class="grid2"><section class="panel"><h3>إعداد الجلسة</h3><div class="form-grid" style="margin-top:16px"><div class="form-field"><label for="sessionCourse">المقرر</label><select class="field" id="sessionCourse">${myCourses().map(c=>`<option value="${esc(c.id)}">${esc(c.name)} · ${esc(c.section)}</option>`).join('')}</select></div><div class="form-field"><label for="sessionLecture">رقم المحاضرة</label><input class="field" id="sessionLecture" value="المحاضرة 11"></div></div><div class="form-actions"><button class="primary" data-action="open-session">فتح جلسة التحضير</button><button class="secondary" data-action="close-session">إغلاق الجلسة</button></div><div id="sessionMessage" class="muted" style="margin-top:12px">لم تُفتح جلسة بعد.</div></section><section class="panel center"><h3>رمز QR للجلسة</h3><div id="qrBox" class="qr-box empty">افتح الجلسة لإظهار الرمز</div><p class="muted">اعرض الرمز للطلاب لإتمام تسجيل الحضور.</p></section></div>
+ <section class="panel"><div class="panel-head"><h3>قائمة الطلاب وحالات الحضور</h3><button class="primary" data-action="save-session">حفظ حالات الحضور</button></div><div class="table-wrap"><table><thead><tr><th>الرقم الجامعي</th><th>اسم الطالب</th><th>حالة الحضور</th></tr></thead><tbody id="sessionRoster">${renderRosterRows((myCourses()[0]||{}).id)}</tbody></table></div></section>`;
 }
 function paintSession(){
- const box=$('qrBox');if(!box)return;const s=state.session;
+ const box=$('qrBox');if(!box)return;const s=state.session;const sel=$('sessionCourse'),refresh=()=>{$('sessionRoster').innerHTML=renderRosterRows(sel.value)};sel.onchange=refresh;
  if(!s){box.className='qr-box empty';box.textContent='افتح الجلسة لإظهار الرمز';$('sessionMessage').textContent='لم تُفتح جلسة بعد.';return}
  const q=qrcode(0,'M');q.addData('TAIBAH:'+s.code);q.make();box.className='qr-box';box.innerHTML=q.createSvgTag({scalable:true,margin:0});
- const c=state.courses.find(x=>x.id===s.courseId);
- $('sessionCourse').value=s.courseId;$('sessionLecture').value=s.lecture;
- $('sessionMessage').innerHTML='<span class="badge green">الجلسة مفتوحة</span> '+esc(c?c.name:s.courseId)+' · '+esc(s.lecture);
+ const c=myCourses().find(x=>x.id===s.courseId);
+ $('sessionCourse').value=s.courseId;$('sessionLecture').value=s.lecture;refresh();
+ $('sessionMessage').innerHTML='<span class="badge green">الجلسة مفتوحة</span> '+esc(c?c.name+' · '+c.section:s.courseId)+' · '+esc(s.lecture);
 }
 let scanStream=null,scanTimer=null;
 function stopScan(){clearInterval(scanTimer);if(scanStream)scanStream.getTracks().forEach(t=>t.stop());scanStream=null;const a=$('scanArea');if(a)a.classList.remove('on')}
@@ -389,18 +406,18 @@ function handleScan(text){
  const me=getStudent().id,date=new Date().toISOString().slice(0,10);
  const ex=state.attendance.find(a=>a.studentId===me&&a.courseId===s.courseId&&a.lecture===s.lecture);
  if(ex){ex.status='حاضر';ex.date=date}else state.attendance.push({studentId:me,courseId:s.courseId,lecture:s.lecture,date,status:'حاضر'});
- persist();const c=state.courses.find(x=>x.id===s.courseId);showToast('تم تسجيل حضورك في '+(c?c.name:s.courseId)+'.');goto('attendance');
+ persist();const c=myCourses().find(x=>x.id===s.courseId);showToast('تم تسجيل حضورك في '+(c?c.name:s.courseId)+'.');goto('attendance');
 }
-function renderRosterRows(){return state.students.map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${esc(s.email)}</td><td><select class="field roster-status" data-student="${esc(s.id)}" style="padding:7px;max-width:150px"><option>حاضر</option><option>غائب</option><option>معذور</option></select></td></tr>`).join('')}
-function pageAlerts(){return pageHead('التنبيهات','مراجعة تنبيهات الغياب وفق السجلات وحد الغياب المحدد.')+`<section class="panel"><div class="panel-head"><h3>حالة المقررات</h3></div>${studentAlertMarkup()}${state.courses.map(c=>`<div class="course-row"><div class="course-icon">${ic('♢')}</div><div class="course-info"><b>${esc(c.name)}</b><small>الغياب: ${absTxt(studentStats(c.id).absent)} (${studentStats(c.id).percent}%)</small></div>${({deprived:'<span class="badge red">حرمان</span>',limit:'<span class="badge amber">على الحد الأقصى</span>',warn:'<span class="badge amber">يتطلب الانتباه</span>',ok:'<span class="badge green">ضمن الحد المسموح</span>'})[courseRisk(c.id)]}</div>`).join('')}</section>`}
+function renderRosterRows(courseId){return enrolled(courseId).map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td><select class="field roster-status" data-student="${esc(s.id)}" style="padding:7px;max-width:150px"><option>حاضر</option><option>غائب</option><option>معذور</option></select></td></tr>`).join('')}
+function pageAlerts(){return pageHead('التنبيهات','مراجعة تنبيهات الغياب وفق السجلات وحد الغياب المحدد.')+`<section class="panel"><div class="panel-head"><h3>حالة المقررات</h3></div>${studentAlertMarkup()}${myCourses().map(c=>`<div class="course-row"><div class="course-icon">${ic('♢')}</div><div class="course-info"><b>${esc(c.name)}</b><small>الغياب: ${absTxt(studentStats(c.id).absent)} (${studentStats(c.id).percent}%)</small></div>${({deprived:'<span class="badge red">حرمان</span>',limit:'<span class="badge amber">على الحد الأقصى</span>',warn:'<span class="badge amber">يتطلب الانتباه</span>',ok:'<span class="badge green">ضمن الحد المسموح</span>'})[courseRisk(c.id)]}</div>`).join('')}</section>`}
 function pageReports(){
- const total=state.attendance.length, present=state.attendance.filter(a=>a.status==='حاضر').length, absent=state.attendance.filter(a=>a.status==='غائب').length, excused=state.attendance.filter(a=>a.status==='معذور').length;
+ const total=myAttendance().length, present=myAttendance().filter(a=>a.status==='حاضر').length, absent=myAttendance().filter(a=>a.status==='غائب').length, excused=myAttendance().filter(a=>a.status==='معذور').length;
  return pageHead('تقارير الحضور والغياب','ملخص الحضور والغياب حسب المقرر مع إمكانية التصدير.',`<button class="primary" data-action="export-report">تصدير CSV</button>`)+
- `<div class="stats">${stat('إجمالي السجلات',total,'▦','كل السجلات')}${stat('حاضر',present,'✓','حالات حضور','green')}${stat('غائب',absent,'!','حالات غياب','red')}${stat('معذور',excused,'◇','حالات بعذر','amber')}</div><section class="panel"><div class="panel-head"><h3>ملخص حسب المقرر</h3></div><div class="table-wrap"><table><thead><tr><th>المقرر</th><th>عدد السجلات</th><th>حاضر</th><th>غائب</th><th>معذور</th></tr></thead><tbody>${state.courses.map(c=>{const a=state.attendance.filter(x=>x.courseId===c.id);return `<tr><td>${esc(c.name)}</td><td>${a.length}</td><td>${a.filter(x=>x.status==='حاضر').length}</td><td>${a.filter(x=>x.status==='غائب').length}</td><td>${a.filter(x=>x.status==='معذور').length}</td></tr>`}).join('')}</tbody></table></div><p class="small">يمكن فتح ملف CSV في برامج الجداول.</p></section>`;
+ `<div class="stats">${stat('إجمالي السجلات',total,'▦','كل السجلات')}${stat('حاضر',present,'✓','حالات حضور','green')}${stat('غائب',absent,'!','حالات غياب','red')}${stat('معذور',excused,'◇','حالات بعذر','amber')}</div><section class="panel"><div class="panel-head"><h3>ملخص حسب المقرر</h3></div><div class="table-wrap"><table><thead><tr><th>المقرر</th><th>عدد السجلات</th><th>حاضر</th><th>غائب</th><th>معذور</th></tr></thead><tbody>${myCourses().map(c=>{const a=myAttendance().filter(x=>x.courseId===c.id);return `<tr><td>${esc(c.name)} (${esc(c.section)})</td><td>${a.length}</td><td>${a.filter(x=>x.status==='حاضر').length}</td><td>${a.filter(x=>x.status==='غائب').length}</td><td>${a.filter(x=>x.status==='معذور').length}</td></tr>`}).join('')}</tbody></table></div><p class="small">يمكن فتح ملف CSV في برامج الجداول.</p></section>`;
 }
 function pageManagement(){
  return pageHead('إدارة البيانات','إضافة الطلاب ومراجعة بياناتهم.')+
- `<section class="panel"><div class="panel-head"><h3>إضافة طالب</h3><span class="badge blue">للمسؤول</span></div><form id="studentForm"><div class="form-grid"><div class="form-field"><label for="newStudentId">الرقم الجامعي</label><input id="newStudentId" class="field" required placeholder="مثال: 4400001"></div><div class="form-field"><label for="newStudentName">اسم الطالب</label><input id="newStudentName" class="field" required placeholder="الاسم الكامل"></div><div class="form-field"><label for="newStudentEmail">البريد الجامعي</label><input id="newStudentEmail" class="field" required placeholder="student@university.edu"></div><div class="form-field"><label for="newStudentCourse">المقرر</label><select id="newStudentCourse" class="field">${state.courses.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('')}</select></div></div><div class="form-actions"><button type="submit" class="primary">حفظ بيانات الطالب</button></div></form></section><section class="panel"><div class="panel-head"><h3>بيانات الطلاب</h3><span class="muted">${state.students.length} سجلات</span></div><div class="table-wrap"><table><thead><tr><th>الرقم الجامعي</th><th>اسم الطالب</th><th>البريد</th><th>المقرر</th><th>إجراء</th></tr></thead><tbody>${state.students.map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${esc(s.course||'—')}</td><td><button class="table-action" data-remove-student="${esc(s.id)}">حذف</button></td></tr>`).join('')}</tbody></table></div></section>`;
+ `<section class="panel"><div class="panel-head"><h3>إضافة طالب</h3><span class="badge blue">للمسؤول</span></div><form id="studentForm"><div class="form-grid"><div class="form-field"><label for="newStudentId">الرقم الجامعي</label><input id="newStudentId" class="field" required placeholder="مثال: 4400001"></div><div class="form-field"><label for="newStudentName">اسم الطالب</label><input id="newStudentName" class="field" required placeholder="الاسم الكامل"></div><div class="form-field"><label for="newStudentCourse">المقرر</label><select id="newStudentCourse" class="field">${state.courses.map(c=>`<option value="${esc(c.id)}">${esc(c.name)} · ${esc(c.section)}</option>`).join('')}</select></div></div><div class="form-actions"><button type="submit" class="primary">حفظ بيانات الطالب</button></div></form></section><section class="panel"><div class="panel-head"><h3>بيانات الطلاب</h3><span class="muted">${state.students.length} سجلات</span></div><div class="table-wrap"><table><thead><tr><th>الرقم الجامعي</th><th>اسم الطالب</th><th>المقرر</th><th>إجراء</th></tr></thead><tbody>${state.students.map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${esc(courseLabel(s.course))}</td><td><button class="table-action" data-remove-student="${esc(s.id)}">حذف</button></td></tr>`).join('')}</tbody></table></div></section>`;
 }
 function pageSettings(){return pageHead('إعدادات النظام','ضبط حد الغياب وتشغيل التنبيهات وفق اللوائح المعتمدة من الجامعة.')+`<section class="panel"><h3>التنبيهات وحد الغياب</h3><form id="settingsForm" style="max-width:620px;margin-top:18px"><div class="form-grid"><div class="form-field"><label for="threshold">حد الغياب (%)</label><input id="threshold" type="number" min="1" max="100" value="${Number(state.threshold)}" class="field" required><div class="small">تعادل ${maxAbs()} غيابات، والحرمان عند الغياب رقم ${maxAbs()+1}.</div></div><div class="form-field"><label for="semLectures">عدد محاضرات المقرر</label><input id="semLectures" type="number" min="1" max="200" value="${Number(state.semesterLectures)}" class="field" required></div><div class="form-field"><label for="alertsEnabled">التنبيهات</label><select id="alertsEnabled" class="field"><option value="true" ${state.alertsEnabled?'selected':''}>مفعلة</option><option value="false" ${!state.alertsEnabled?'selected':''}>معطلة</option></select></div></div><div class="form-actions"><button type="submit" class="primary">حفظ الإعدادات</button></div></form></section>`}
 function renderPage(){
@@ -413,7 +430,7 @@ function renderPage(){
 function goto(page){currentPage=page;renderNav();renderPage();window.scrollTo({top:0,behavior:'smooth'})}
 function bindPageEvents(){
  document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>goto(b.dataset.goto)));
- document.querySelectorAll('[data-start-course]').forEach(b=>b.addEventListener('click',()=>{goto('session');setTimeout(()=>{const sel=$('sessionCourse');if(sel)sel.value=b.dataset.startCourse;},0)}));
+ document.querySelectorAll('[data-start-course]').forEach(b=>b.addEventListener('click',()=>{goto('session');setTimeout(()=>{const sel=$('sessionCourse');if(sel){sel.value=b.dataset.startCourse;sel.dispatchEvent(new Event('change'))}},0)}));
  document.querySelectorAll('[data-edit-attendance]').forEach(b=>b.addEventListener('click',()=>{
   const [studentId,courseId,lecture]=b.dataset.editAttendance.split('|');const item=state.attendance.find(a=>a.studentId===studentId&&a.courseId===courseId&&a.lecture===lecture);if(!item)return;
   const status=prompt('أدخل الحالة الجديدة: حاضر أو غائب أو معذور',item.status);if(['حاضر','غائب','معذور'].includes(status)){item.status=status;persist();renderPage();showToast('تم تحديث حالة الحضور.')}else if(status!==null)showToast('الحالة غير معتمدة. استخدم: حاضر أو غائب أو معذور.');
@@ -421,7 +438,7 @@ function bindPageEvents(){
  document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>handleAction(b.dataset.action)));
  document.querySelectorAll('[data-remove-student]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.removeStudent;if(!confirm('هل تريد حذف هذا الطالب؟'))return;state.students=state.students.filter(s=>s.id!==id);state.attendance=state.attendance.filter(a=>a.studentId!==id);persist();renderPage();showToast('تم حذف الطالب.')}));
  const qf=$('qrFile');if(qf)qf.addEventListener('change',()=>scanImage(qf.files[0]));
- const sf=$('studentForm');if(sf)sf.addEventListener('submit',e=>{e.preventDefault();const id=$('newStudentId').value.trim(),name=$('newStudentName').value.trim(),email=$('newStudentEmail').value.trim(),course=$('newStudentCourse').value;if(!id||!name||!email){showToast('يرجى إكمال الحقول المطلوبة.');return}if(state.students.some(s=>s.id===id)){showToast('الرقم الجامعي مستخدم بالفعل.');return}state.students.push({id,name,email,course});persist();renderPage();showToast('تم حفظ بيانات الطالب.')} );
+ const sf=$('studentForm');if(sf)sf.addEventListener('submit',e=>{e.preventDefault();const id=$('newStudentId').value.trim(),name=$('newStudentName').value.trim(),course=$('newStudentCourse').value;if(!id||!name){showToast('يرجى إكمال الحقول المطلوبة.');return}if(state.students.some(s=>s.id===id)){showToast('الرقم الجامعي مستخدم بالفعل.');return}state.students.push({id,name,course});persist();renderPage();showToast('تم حفظ بيانات الطالب.')} );
  const settings=$('settingsForm');if(settings)settings.addEventListener('submit',e=>{e.preventDefault();const n=Number($('threshold').value);if(!Number.isFinite(n)||n<1||n>100){showToast('أدخل نسبة بين 1 و100.');return}const L=Number($('semLectures').value);if(!Number.isInteger(L)||L<1){showToast('أدخل عدد محاضرات صحيحًا.');return}state.threshold=n;state.semesterLectures=L;state.alertsEnabled=$('alertsEnabled').value==='true';persist();renderPage();showToast('تم حفظ الإعدادات.')} );
 }
 function handleAction(action){
@@ -430,15 +447,15 @@ function handleAction(action){
  else if(action==='scan-start')startScan();
  else if(action==='scan-image')$('qrFile').click();
  else if(action==='save-session'){
-  const courseId=$('sessionCourse')?.value||'IS321',lecture=$('sessionLecture')?.value.trim()||'المحاضرة 11';const date=new Date().toISOString().slice(0,10);
+  const courseId=$('sessionCourse')?.value||'MIS492',lecture=$('sessionLecture')?.value.trim()||'المحاضرة 11';const date=new Date().toISOString().slice(0,10);
   document.querySelectorAll('.roster-status').forEach(sel=>{const studentId=sel.dataset.student;const existing=state.attendance.find(a=>a.studentId===studentId&&a.courseId===courseId&&a.lecture===lecture);if(existing)existing.status=sel.value;else state.attendance.push({studentId,courseId,lecture,date,status:sel.value});});persist();renderPage();showToast('تم حفظ حالات الحضور.');
  }
  else if(action==='export-report')exportCSV();else if(action==='add-course'){
-  const id=prompt('رمز المقرر الجديد (مثال IS350):');if(!id)return;const name=prompt('اسم المقرر:');if(!name)return;if(state.courses.some(c=>c.id===id)){showToast('رمز المقرر موجود بالفعل.');return}state.courses.push({id:id.trim(),name:name.trim(),section:'شعبة 1',instructor:'حسام الفحل',lectures:0,absent:0});persist();renderPage();showToast('تمت إضافة المقرر.');
+  const id=prompt('رمز المقرر الجديد (مثال MIS350):');if(!id)return;const name=prompt('اسم المقرر:');if(!name)return;if(state.courses.some(c=>c.id===id)){showToast('رمز المقرر موجود بالفعل.');return}state.courses.push({id:id.trim(),name:name.trim(),section:'شعبة 1',instructor:'حسام الفحل',lectures:0,absent:0});persist();renderPage();showToast('تمت إضافة المقرر.');
  }
 }
 function exportCSV(){
- const header=['الرقم الجامعي','اسم الطالب','رمز المقرر','المقرر','المحاضرة','التاريخ','الحالة'];const lines=[header,...state.attendance.map(a=>{const s=state.students.find(x=>x.id===a.studentId)||{id:a.studentId,name:''};const c=state.courses.find(x=>x.id===a.courseId)||{name:a.courseId};return [s.id,s.name,a.courseId,c.name,a.lecture,a.date,a.status]})];const csv='\uFEFF'+lines.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));const a=document.createElement('a');a.href=url;a.download='تقرير_الحضور_والغياب.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);showToast('تم تنزيل تقرير الحضور والغياب.');
+ const header=['الرقم الجامعي','اسم الطالب','رمز المقرر','المقرر','الشعبة','المحاضرة','التاريخ','الحالة'];const lines=[header,...myAttendance().map(a=>{const s=state.students.find(x=>x.id===a.studentId)||{id:a.studentId,name:''};const c=state.courses.find(x=>x.id===a.courseId)||{name:a.courseId};return [s.id,s.name,c.code||c.id||a.courseId,c.name,c.section||'',a.lecture,a.date,a.status]})];const csv='\uFEFF'+lines.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));const a=document.createElement('a');a.href=url;a.download='تقرير_الحضور_والغياب.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);showToast('تم تنزيل تقرير الحضور والغياب.');
 }
 // بيانات الدخول: test / 123.
 </script>

@@ -345,7 +345,7 @@ function pageAttendance(){
  }
  const rec=state.attendance;
  return pageHead('سجل الحضور والغياب','مراجعة حالات الحضور المسجلة وتعديلها ضمن صلاحية عضو هيئة التدريس.')+
- `<section class="panel"><div class="panel-head"><h3>السجلات المسجلة</h3><button class="primary" data-goto="session">تسجيل حالات جلسة</button></div>${recordsTable(rec,'instructor')}</section>`;
+ `<section class="panel"><div class="panel-head"><h3>السجلات المسجلة</h3><button class="primary" data-goto="session">تسجيل جلسة التحضير</button></div>${recordsTable(rec,'instructor')}</section>`;
 }
 function pageCourses(){
  const showTeacher=currentRole!=='student';

@@ -4,91 +4,292 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>نظام التحضير الذكي</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#ffffff;--ink:#3955DC;--sub:#00A7D8;--accent:#0E977A;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%}
-body{font-family:'Tajawal',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.wrap{width:100%;max-width:420px}
-header{text-align:center;margin-bottom:28px}
-h1{margin:0 0 6px;font-size:28px}
-header p{margin:0;color:var(--sub)}
-.hidden{display:none}
-.roles{display:grid;gap:14px}
-button{font:inherit;color:inherit;cursor:pointer}
-.role{padding:18px;border:2px solid var(--accent);border-radius:8px;background:var(--bg);font-size:18px;font-weight:700;text-align:center}
-.role:hover,.role:focus-visible{background:rgba(14,151,122,.1);outline:none}
-h2{margin:0 0 8px;font-size:20px}
-label{display:block;margin:16px 0 6px;font-weight:500}
-.field{position:relative}
-input{width:100%;padding:13px 14px;border:2px solid var(--accent);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:16px;text-align:left}
-input::placeholder{color:var(--ink);opacity:.45}
-input:focus{outline:3px solid rgba(14,151,122,.3)}
-.eye{position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:0;font-size:14px;text-decoration:underline;color:var(--sub)}
-.btn{width:100%;margin-top:22px;padding:14px;border:2px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--bg);font-size:17px;font-weight:700}
-.back{background:none;border:0;padding:0;margin-bottom:14px;text-decoration:underline;color:var(--sub)}
-.msg{margin-top:14px;text-align:center;min-height:22px;color:var(--sub)}
+:root{--bg:#f5f7fb;--surface:#fff;--ink:#263579;--sub:#61708c;--blue:#3955dc;--cyan:#00a7d8;--green:#0e977a;--green-light:#e8f7f2;--blue-light:#edf0ff;--red:#c94646;--red-light:#fff0f0;--amber:#a66a00;--amber-light:#fff7e3;--border:#e2e7f0;--shadow:0 8px 28px rgba(29,48,110,.07)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:'Tajawal',Tahoma,Arial,sans-serif;background:var(--bg);color:#202b44}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #9bb0ff;outline-offset:2px}.hidden{display:none!important}
+/* Login — restored to the original page layout */
+#loginPage{min-height:100vh;width:100%;display:flex;align-items:center;justify-content:center;padding:20px;background:#fff;color:var(--blue)}
+#loginPage .wrap{width:100%;max-width:420px}
+#loginPage header{text-align:center;margin-bottom:28px}
+#loginPage h1{margin:0 0 6px;font-size:28px;color:var(--blue)}
+#loginPage header p{margin:0;color:var(--cyan)}
+#loginPage .hidden{display:none!important}
+#loginPage .roles{display:grid;gap:14px}
+#loginPage button{font:inherit;color:inherit;cursor:pointer}
+#loginPage .role{padding:18px;border:2px solid var(--green);border-radius:8px;background:#fff;font-size:18px;font-weight:700;text-align:center;color:var(--blue)}
+#loginPage .role:hover,#loginPage .role:focus-visible{background:rgba(14,151,122,.1);outline:none}
+#loginPage h2{margin:0 0 8px;font-size:20px;color:var(--blue)}
+#loginPage label{display:block;margin:16px 0 6px;font-weight:500;color:var(--blue)}
+#loginPage .field-wrap{position:relative}
+#loginPage input{width:100%;padding:13px 14px;border:2px solid var(--green);border-radius:8px;background:#fff;color:var(--blue);font:inherit;font-size:16px;text-align:left}
+#loginPage input::placeholder{color:var(--blue);opacity:.45}
+#loginPage input:focus{outline:3px solid rgba(14,151,122,.3)}
+#loginPage .eye{position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:0;font-size:14px;text-decoration:underline;color:var(--cyan)}
+#loginPage .btn{width:100%;margin-top:22px;padding:14px;border:2px solid var(--green);border-radius:8px;background:var(--green);color:#fff;font-size:17px;font-weight:700}
+#loginPage .back{background:none;border:0;padding:0;margin-bottom:14px;text-decoration:underline;color:var(--cyan)}
+#loginPage .msg{margin-top:14px;text-align:center;min-height:22px;color:var(--cyan)}
+body.app-mode{background:var(--bg);padding:0}
+/* App shell */
+#appPage{min-height:100vh}.topbar{height:76px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:5}.top-brand{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:800;color:var(--ink)}.mini-logo{width:40px;height:40px;border-radius:12px;background:var(--blue-light);display:grid;place-items:center;font-size:22px}.top-actions{display:flex;align-items:center;gap:12px}.user-chip{display:flex;align-items:center;gap:9px;color:#35405c;font-weight:700}.avatar{width:38px;height:38px;border-radius:50%;background:var(--green-light);color:var(--green);display:grid;place-items:center;font-weight:800}.app-layout{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px;padding:24px}.sidebar{background:#fff;border:1px solid var(--border);border-radius:18px;padding:15px;height:fit-content;position:sticky;top:98px}.side-label{font-size:12px;color:#8b96aa;font-weight:800;margin:7px 12px 12px}.nav-item{display:flex;align-items:center;gap:11px;width:100%;padding:12px 13px;border:0;border-radius:11px;background:transparent;color:#56617b;text-align:right;font-weight:700;margin:3px 0}.nav-item .nav-icon{width:23px;text-align:center;font-size:18px}.nav-item:hover{background:#f7f8fc}.nav-item.active{background:var(--blue-light);color:var(--blue)}.content{min-width:0}.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin:3px 0 22px}.page-head h2{margin:0;color:var(--ink);font-size:27px}.page-head p{color:var(--sub);margin:7px 0 0;line-height:1.7}.date-chip{background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 13px;color:#52617f;white-space:nowrap;font-weight:700}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}.stat{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 3px 14px rgba(29,48,110,.025)}.stat-top{display:flex;align-items:center;justify-content:space-between;color:var(--sub);font-size:14px;font-weight:700}.stat-icon{height:39px;width:39px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:var(--blue-light)}.stat strong{display:block;font-size:29px;color:var(--ink);margin:12px 0 5px}.stat small{color:#8a94a7;font-size:13px}.grid2{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,1fr);gap:16px;margin-bottom:17px}.panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:17px;min-width:0}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.panel h3{margin:0;color:var(--ink);font-size:18px}.muted{color:var(--sub);font-size:14px;line-height:1.7}.course-list{display:grid;gap:11px}.course-row{display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--border);border-radius:13px}.course-icon{width:42px;height:42px;flex-shrink:0;border-radius:12px;background:var(--blue-light);display:grid;place-items:center;font-size:20px}.course-info{flex:1;min-width:0}.course-info b{display:block;color:#293657}.course-info small{display:block;color:#7e8aa3;margin-top:4px}.percent{font-weight:800;white-space:nowrap}.bar{height:7px;border-radius:10px;background:#edf0f6;overflow:hidden;margin-top:10px}.bar span{height:100%;display:block;border-radius:10px;background:var(--green)}.bar.warn span{background:#e5a12a}.bar.danger span{background:var(--red)}.badge{display:inline-flex;align-items:center;gap:5px;border-radius:30px;padding:5px 10px;font-size:12px;font-weight:800;white-space:nowrap}.badge.green{background:var(--green-light);color:var(--green)}.badge.red{background:var(--red-light);color:var(--red)}.badge.amber{background:var(--amber-light);color:var(--amber)}.badge.blue{background:var(--blue-light);color:var(--blue)}.alert{border-radius:12px;padding:13px 14px;display:flex;gap:10px;line-height:1.8;margin:10px 0}.alert.warning{background:var(--amber-light);color:#7f580d}.alert.info{background:#edf8ff;color:#2e6585}.alert.success{background:var(--green-light);color:#176b58}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:570px}th,td{padding:13px 12px;border-bottom:1px solid #edf0f5;text-align:right;white-space:nowrap}th{background:#f8f9fc;color:#77829a;font-size:13px;font-weight:800}td{color:#34405a;font-size:14px}tbody tr:last-child td{border-bottom:0}.table-action{border:0;background:transparent;color:var(--blue);font-weight:800;padding:5px 7px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.form-field label{margin:0 0 7px}.form-field input,.form-field select{width:100%;border:1px solid #ccd4e5;border-radius:10px;padding:12px;background:#fff;color:#26334f}.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}.empty{padding:26px;text-align:center;color:var(--sub);border:1px dashed var(--border);border-radius:12px}.qr-box{width:150px;height:150px;margin:10px auto 14px;display:grid;place-items:center;background:repeating-linear-gradient(45deg,#17234b 0 5px,#fff 5px 10px);border:10px solid white;box-shadow:0 0 0 1px var(--border);border-radius:8px;color:#fff;font-size:13px;text-shadow:0 1px 4px #000}.qr-box span{background:#fff;color:#15234b;padding:7px;border-radius:4px;text-shadow:none;font-weight:800}.center{text-align:center}.small{font-size:12px;color:#7b879e}.footer-note{font-size:12px;color:#8390a7;text-align:center;padding:12px}.toast{position:fixed;bottom:22px;left:22px;z-index:20;background:#1e3157;color:white;padding:13px 18px;border-radius:12px;box-shadow:var(--shadow);max-width:min(90vw,420px)}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.app-layout{grid-template-columns:205px minmax(0,1fr);padding:16px;gap:16px}.grid2{grid-template-columns:1fr}}
+@media(max-width:700px){.topbar{padding:0 14px;height:66px}.top-brand{font-size:17px}.top-actions .secondary{padding:8px}.user-chip span.role-text{display:none}.app-layout{display:block;padding:12px}.sidebar{position:static;display:flex;overflow:auto;gap:4px;padding:8px;margin-bottom:16px}.side-label{display:none}.nav-item{min-width:max-content;width:auto;margin:0;padding:10px}.nav-item .nav-icon{width:auto}.nav-item .nav-text{font-size:13px}.page-head{display:block}.date-chip{display:inline-block;margin-top:12px}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:24px}.panel{padding:15px}.form-grid{grid-template-columns:1fr}.login-card{padding:24px 19px}.roles{gap:6px}.role-btn{font-size:13px}.top-actions{gap:7px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>نظام التحضير الذكي</h1>
-    <p>سجّل حضورك عبر رمز QR</p>
-    <p id="sub" style="margin-top:18px">اختر نوع الحساب للمتابعة</p>
-  </header>
+<section id="loginPage">
+  <div class="wrap">
+    <header>
+      <h1>نظام التحضير الذكي</h1>
+      <p>سجّل حضورك عبر رمز QR</p>
+      <p id="sub" style="margin-top:18px">اختر نوع الحساب للمتابعة</p>
+    </header>
 
-  <div id="roleView" class="roles">
-    <button class="role" data-role="عضو هيئة تدريس">عضو هيئة تدريس</button>
-    <button class="role" data-role="طالب جامعي">طالب جامعي</button>
-  </div>
-
-  <div id="loginView" class="hidden">
-    <button class="back" id="back" type="button">رجوع</button>
-    <h2 id="title"></h2>
-    <label for="email">الايميل الجامعي:</label>
-    <input id="email" type="email" dir="ltr" placeholder="name@university.edu" autocomplete="username">
-    <label for="pass">كلمة المرور:</label>
-    <div class="field">
-      <input id="pass" type="password" dir="ltr" autocomplete="current-password">
-      <button class="eye" id="eye" type="button">إظهار</button>
+    <div id="roleView" class="roles">
+      <button class="role" type="button" data-role="عضو هيئة تدريس">عضو هيئة تدريس</button>
+      <button class="role" type="button" data-role="طالب جامعي">طالب جامعي</button>
     </div>
-    <button class="btn" id="go" type="button">تسجيل الدخول</button>
-    <div class="msg" id="msg"></div>
-  </div>
-</div>
 
+    <div id="loginView" class="hidden">
+      <button class="back" id="back" type="button">رجوع</button>
+      <h2 id="title"></h2>
+      <label for="email">الايميل الجامعي:</label>
+      <input id="email" type="text" dir="ltr" placeholder="test" autocomplete="username">
+      <label for="pass">كلمة المرور:</label>
+      <div class="field-wrap">
+        <input id="pass" type="password" dir="ltr" placeholder="123" autocomplete="current-password">
+        <button class="eye" id="eye" type="button">إظهار</button>
+      </div>
+      <button class="btn" id="go" type="button">تسجيل الدخول</button>
+      <div class="msg" id="msg" role="status"></div>
+    </div>
+  </div>
+</section>
+
+<section id="appPage" class="hidden">
+  <header class="topbar">
+    <div class="top-brand"><div class="mini-logo">📘</div><span>نظام التحضير الذكي</span></div>
+    <div class="top-actions"><div class="user-chip"><div class="avatar" id="avatar">ط</div><span id="userName">مستخدم تجريبي</span><span class="role-text badge blue" id="roleBadge">طالب</span></div><button type="button" class="secondary" id="logoutButton">خروج ↗</button></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar"><div class="side-label">القائمة الرئيسية</div><nav id="sideNav"></nav><div class="footer-note">نموذج واجهات الفصل الرابع</div></aside>
+    <main class="content" id="content"></main>
+  </div>
+</section>
+<div id="toast" class="toast hidden" role="status"></div>
 <script>
-const $=id=>document.getElementById(id);
-let role="";
-document.querySelectorAll('.role').forEach(b=>b.onclick=()=>{
-  role=b.dataset.role;
-  $('title').textContent="تسجيل دخول: "+role;
-  $('sub').classList.add('hidden');
-  $('roleView').classList.add('hidden');
-  $('loginView').classList.remove('hidden');
-  $('email').focus();
-});
-$('back').onclick=()=>{
-  $('loginView').classList.add('hidden');
-  $('roleView').classList.remove('hidden');
-  $('sub').classList.remove('hidden');
-  $('msg').textContent="";
+'use strict';
+const $ = id => document.getElementById(id);
+let currentRole = 'student';
+let currentPage = 'home';
+let toastTimer;
+const ROLE_INFO = {
+  student: {label:'طالب جامعي', short:'الطالب', name:'الطالب التجريبي', icon:'ط'},
+  instructor: {label:'عضو هيئة تدريس', short:'عضو هيئة تدريس', name:'عضو هيئة التدريس التجريبي', icon:'ع'},
+  admin: {label:'مسؤول النظام', short:'المسؤول', name:'مسؤول النظام التجريبي', icon:'م'}
 };
-$('eye').onclick=()=>{
-  const h=$('pass').type==='password';
-  $('pass').type=h?'text':'password';
-  $('eye').textContent=h?'إخفاء':'إظهار';
+const NAV = {
+ student:[['home','⌂','الرئيسية'],['session','◉','تسجيل الحضور'],['attendance','▦','سجل الحضور'],['courses','▤','مقرراتي'],['alerts','♢','التنبيهات']],
+ instructor:[['home','⌂','الرئيسية'],['session','◉','جلسة التحضير'],['attendance','▦','سجل الحضور'],['courses','▤','المقررات'],['reports','▥','التقارير']],
+ admin:[['home','⌂','الرئيسية'],['management','♙','إدارة البيانات'],['courses','▤','المقررات'],['reports','▥','التقارير'],['settings','⚙','الإعدادات']]
 };
-function login(){
-  const m=$('msg'),e=$('email').value.trim(),p=$('pass').value;
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){m.textContent="الرجاء إدخال ايميل جامعي صحيح";return}
-  if(p.length<6){m.textContent="كلمة المرور يجب ألا تقل عن 6 أحرف";return}
-  m.textContent="تم تسجيل الدخول بنجاح ("+role+") - نسخة تجريبية";
+const DEMO_COURSES = [
+ {id:'IS321',name:'تحليل وتصميم النظم',section:'شعبة 1',instructor:'د. أحمد محمد',lectures:12,absent:2},
+ {id:'IS322',name:'قواعد البيانات',section:'شعبة 2',instructor:'د. سارة علي',lectures:10,absent:1},
+ {id:'IS341',name:'إدارة مشاريع نظم المعلومات',section:'شعبة 1',instructor:'د. خالد ناصر',lectures:8,absent:0}
+];
+const DEMO_STUDENTS = [
+ {id:'4401186',name:'فيصل صالح الحربي',email:'test',course:'IS321'},
+ {id:'4401982',name:'نواف حامد العمري',email:'student2@taibahu.edu.sa',course:'IS321'},
+ {id:'4420140',name:'عبدالله صالح الحربي',email:'student3@taibahu.edu.sa',course:'IS321'},
+ {id:'4307093',name:'منصور عبدالدائم العبدالدائم',email:'student4@taibahu.edu.sa',course:'IS321'},
+ {id:'4404894',name:'محمد ناصر العمري',email:'student5@taibahu.edu.sa',course:'IS322'}
+];
+const INITIAL_ATTENDANCE = [
+ {studentId:'4401186',courseId:'IS321',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'},
+ {studentId:'4401186',courseId:'IS321',lecture:'المحاضرة 9',date:'2026-10-25',status:'غائب'},
+ {studentId:'4401186',courseId:'IS321',lecture:'المحاضرة 8',date:'2026-10-22',status:'حاضر'},
+ {studentId:'4401186',courseId:'IS322',lecture:'المحاضرة 8',date:'2026-10-26',status:'حاضر'},
+ {studentId:'4401186',courseId:'IS322',lecture:'المحاضرة 7',date:'2026-10-23',status:'معذور'},
+ {studentId:'4401186',courseId:'IS341',lecture:'المحاضرة 6',date:'2026-10-21',status:'حاضر'},
+ {studentId:'4401982',courseId:'IS321',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'},
+ {studentId:'4420140',courseId:'IS321',lecture:'المحاضرة 10',date:'2026-10-27',status:'غائب'},
+ {studentId:'4307093',courseId:'IS321',lecture:'المحاضرة 10',date:'2026-10-27',status:'حاضر'}
+];
+function loadState(){
+ try {
+  const saved=JSON.parse(localStorage.getItem('smartAttendanceDemo')||'null');
+  if(saved && Array.isArray(saved.attendance) && Array.isArray(saved.students) && Array.isArray(saved.courses)) return saved;
+ } catch(e) {}
+ return {attendance:INITIAL_ATTENDANCE.map(x=>({...x})), students:DEMO_STUDENTS.map(x=>({...x})), courses:DEMO_COURSES.map(x=>({...x})), threshold:20, alertsEnabled:true};
 }
-$('go').onclick=login;
-['email','pass'].forEach(i=>$(i).addEventListener('keydown',ev=>{if(ev.key==='Enter')login()}));
+let state=loadState();
+function persist(){try{localStorage.setItem('smartAttendanceDemo',JSON.stringify(state));}catch(e){}}
+function showToast(text){$('toast').textContent=text;$('toast').classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.add('hidden'),2600)}
+function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function todayArabic(){return new Intl.DateTimeFormat('ar-SA',{dateStyle:'full'}).format(new Date())}
+let selectedLoginRole = '';
+document.querySelectorAll('#roleView .role').forEach(b=>b.addEventListener('click',()=>{
+ selectedLoginRole=b.dataset.role;
+ currentRole=selectedLoginRole==='عضو هيئة تدريس'?'instructor':'student';
+ $('title').textContent='تسجيل دخول: '+selectedLoginRole;
+ $('sub').classList.add('hidden');
+ $('roleView').classList.add('hidden');
+ $('loginView').classList.remove('hidden');
+ $('msg').textContent='';
+ $('email').focus();
+}));
+$('back').addEventListener('click',()=>{
+ $('loginView').classList.add('hidden');
+ $('roleView').classList.remove('hidden');
+ $('sub').classList.remove('hidden');
+ $('msg').textContent='';
+});
+$('eye').addEventListener('click',()=>{
+ const show=$('pass').type==='password';
+ $('pass').type=show?'text':'password';
+ $('eye').textContent=show?'إخفاء':'إظهار';
+});
+function login(){
+ const email=$('email').value.trim(),password=$('pass').value;
+ if(email==='test' && password==='123'){
+  $('msg').textContent='';
+  $('loginPage').classList.add('hidden');
+  $('appPage').classList.remove('hidden');
+  document.body.classList.add('app-mode');
+  const info=ROLE_INFO[currentRole];
+  $('userName').textContent=info.name;
+  $('roleBadge').textContent=info.short;
+  $('avatar').textContent=info.icon;
+  currentPage='home';
+  renderNav();
+  renderPage();
+ }else{
+  $('msg').textContent='بيانات الدخول غير صحيحة. استخدم test وكلمة المرور 123.';
+ }
+}
+$('go').addEventListener('click',login);
+['email','pass'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')login()}));
+$('logoutButton').addEventListener('click',()=>{
+ $('appPage').classList.add('hidden');
+ document.body.classList.remove('app-mode');
+ $('loginPage').classList.remove('hidden');
+ $('loginView').classList.add('hidden');
+ $('roleView').classList.remove('hidden');
+ $('sub').classList.remove('hidden');
+ $('email').value='';$('pass').value='';$('msg').textContent='';
+});
+function renderNav(){
+ $('sideNav').innerHTML=NAV[currentRole].map(([page,icon,label])=>`<button class="nav-item ${page===currentPage?'active':''}" type="button" data-page="${page}"><span class="nav-icon">${icon}</span><span class="nav-text">${label}</span></button>`).join('');
+ $('sideNav').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{currentPage=b.dataset.page;renderNav();renderPage()}));
+}
+function pageHead(title,desc,action=''){return `<div class="page-head"><div><h2>${title}</h2><p>${desc}</p></div><div>${action||`<div class="date-chip">${todayArabic()}</div>`}</div></div>`}
+function stat(title,value,icon,note,color='blue'){return `<div class="stat"><div class="stat-top"><span>${title}</span><span class="stat-icon" style="background:${color==='green'?'var(--green-light)':color==='red'?'var(--red-light)':color==='amber'?'var(--amber-light)':'var(--blue-light)'}">${icon}</span></div><strong>${value}</strong><small>${note}</small></div>`}
+function getStudent(){return state.students.find(s=>s.id==='4401186')||state.students[0]||DEMO_STUDENTS[0]}
+function statusBadge(status){let cls=status==='حاضر'?'green':status==='غائب'?'red':'amber';return `<span class="badge ${cls}">${esc(status)}</span>`}
+function studentStats(courseId){
+ const records=state.attendance.filter(a=>a.studentId===getStudent().id&&(!courseId||a.courseId===courseId));
+ const absent=records.filter(a=>a.status==='غائب').length, attended=records.filter(a=>a.status==='حاضر').length, excused=records.filter(a=>a.status==='معذور').length;
+ const total=records.length;return {records,absent,attended,excused,total,percent:total?Math.round(absent/total*100):0};
+}
+function studentCourseCard(course){
+ const s=studentStats(course.id);const n=s.percent;const danger=n>=state.threshold;const warn=n>=Math.max(0,state.threshold-5)&&!danger;
+ return `<div class="course-row"><div class="course-icon">▤</div><div class="course-info"><b>${esc(course.name)}</b><small>${esc(course.id)} · ${esc(course.section)} · ${esc(course.instructor)}</small><div class="bar ${danger?'danger':warn?'warn':''}"><span style="width:${Math.max(2,Math.min(100,n))}%"></span></div></div><div class="percent"><span>${n}%</span><div class="small">نسبة الغياب</div></div></div>`;
+}
+function homeStudent(){
+ const s=studentStats(), enrolled=state.courses.length, alerts=state.alertsEnabled?state.courses.filter(c=>studentStats(c.id).percent>=state.threshold).length:0;
+ return pageHead('مرحبًا بك في نظام التحضير الذكي','لوحة الطالب: متابعة المقررات وسجل الحضور والتنبيهات.')+
+ `<div class="stats">${stat('المقررات المسجلة',enrolled,'▤','مقررات تجريبية')}${stat('حالات الحضور',s.attended,'✓','إجمالي السجلات المسجلة','green')}${stat('حالات الغياب',s.absent,'!','تحتسب من السجل','red')}${stat('التنبيهات',alerts,'♢',state.alertsEnabled?'بحسب إعدادات النظام':'التنبيهات معطلة','amber')}</div>`+
+ `<div class="grid2"><section class="panel"><div class="panel-head"><h3>ملخص المقررات</h3><button class="table-action" data-goto="courses">عرض الكل ←</button></div><div class="course-list">${state.courses.map(studentCourseCard).join('')}</div></section><section class="panel"><div class="panel-head"><h3>التنبيهات والملاحظات</h3><span class="badge blue">تجريبي</span></div>${studentAlertMarkup()}<div class="muted" style="margin-top:12px">تُحسب النسبة من حالات الغياب المسجلة، ويحدد مسؤول النظام الحد المعتمد.</div></section></div>`;
+}
+function studentAlertMarkup(){
+ const bad=state.courses.filter(c=>studentStats(c.id).percent>=state.threshold);
+ if(!state.alertsEnabled)return '<div class="alert info">التنبيهات غير مفعلة حاليًا في إعدادات العرض التجريبي.</div>';
+ if(!bad.length)return '<div class="alert success">لا توجد مقررات تجاوزت حد الغياب التجريبي المحدد.</div>';
+ return bad.map(c=>`<div class="alert warning">⚠️ وصلت نسبة الغياب في مقرر <b>${esc(c.name)}</b> إلى ${studentStats(c.id).percent}%.</div>`).join('');
+}
+function homeInstructor(){
+ const todays=state.attendance.filter(a=>a.date==='2026-10-27').length;
+ return pageHead('لوحة عضو هيئة التدريس','إدارة جلسات التحضير ومراجعة حالات الطلاب وإصدار التقارير.',`<button class="primary" data-goto="session">＋ فتح جلسة تحضير</button>`)+
+ `<div class="stats">${stat('المقررات',state.courses.length,'▤','مقررات ضمن النموذج')}${stat('الطلاب',state.students.length,'♙','طلاب تجريبيون')}${stat('سجلات اليوم',todays,'✓','ضمن بيانات العرض','green')}${stat('جلسة التحضير','جاهزة','◉','يمكن فتح جلسة تجريبية','amber')}</div>`+
+ `<div class="grid2"><section class="panel"><div class="panel-head"><h3>المقررات المسندة</h3><button class="table-action" data-goto="courses">التفاصيل ←</button></div><div class="course-list">${state.courses.map(c=>`<div class="course-row"><div class="course-icon">▤</div><div class="course-info"><b>${esc(c.name)}</b><small>${esc(c.id)} · ${esc(c.section)}</small></div><button class="secondary" data-start-course="${esc(c.id)}">فتح التحضير</button></div>`).join('')}</div></section><section class="panel"><h3>خطوات الجلسة</h3><div class="alert info">1. اختر المقرر والمحاضرة.</div><div class="alert info">2. افتح جلسة التحضير ورمز QR التجريبي.</div><div class="alert info">3. راجع حالة كل طالب واحفظ السجل.</div><p class="small">رمز QR هنا تمثيلي؛ لا يجري مسح فعلي أو تحقق من خدمة جامعية.</p></section></div>`;
+}
+function homeAdmin(){
+ return pageHead('لوحة مسؤول النظام','إدارة البيانات الأساسية وضبط حد الغياب ومراجعة المخرجات.')+
+ `<div class="stats">${stat('الطلاب',state.students.length,'♙','في بيانات العرض')}${stat('المقررات',state.courses.length,'▤','في قاعدة البيانات المقترحة')}${stat('سجلات الحضور',state.attendance.length,'▦','سجلات تجريبية','green')}${stat('حد الغياب',state.threshold+'%','⚙','قابل للتعديل من الإعدادات','amber')}</div>`+
+ `<div class="grid2"><section class="panel"><div class="panel-head"><h3>الإدارة السريعة</h3></div><div class="course-list"><div class="course-row"><div class="course-icon">♙</div><div class="course-info"><b>إدارة الطلاب</b><small>الرقم الجامعي والاسم والبريد</small></div><button class="secondary" data-goto="management">فتح</button></div><div class="course-row"><div class="course-icon">▤</div><div class="course-info"><b>إدارة المقررات</b><small>المقرر والشعبة وعضو هيئة التدريس</small></div><button class="secondary" data-goto="courses">فتح</button></div><div class="course-row"><div class="course-icon">⚙</div><div class="course-info"><b>إعدادات النظام</b><small>حد الغياب وتشغيل التنبيهات</small></div><button class="secondary" data-goto="settings">فتح</button></div></div></section><section class="panel"><h3>تنبيه تصميمي</h3><div class="alert info">هذه واجهة أولية متوافقة مع متطلبات الفصل الرابع. لا تتصل بقاعدة بيانات فعلية أو نظام الجامعة.</div><p class="muted">تعتمد النسخة على بيانات مثال يمكن تغييرها أثناء العرض، وتحفظ تعديلاتها محليًا في المتصفح عند السماح بذلك.</p></section></div>`;
+}
+function recordsTable(records,role='student'){
+ const rows=records.map(a=>{const stud=state.students.find(s=>s.id===a.studentId)||{name:'طالب تجريبي',id:a.studentId};const course=state.courses.find(c=>c.id===a.courseId)||{name:a.courseId};return `<tr><td>${esc(stud.name)}</td><td>${esc(course.name)}</td><td>${esc(a.lecture)}</td><td>${esc(a.date)}</td><td>${statusBadge(a.status)}</td>${role==='instructor'?`<td><button class="table-action" data-edit-attendance="${esc(a.studentId)}|${esc(a.courseId)}|${esc(a.lecture)}">تعديل الحالة</button></td>`:''}</tr>`}).join('');
+ return `<div class="table-wrap"><table><thead><tr><th>الطالب</th><th>المقرر</th><th>المحاضرة</th><th>التاريخ</th><th>الحالة</th>${role==='instructor'?'<th>إجراء</th>':''}</tr></thead><tbody>${rows||'<tr><td colspan="6" class="center">لا توجد سجلات لعرضها.</td></tr>'}</tbody></table></div>`;
+}
+function pageAttendance(){
+ if(currentRole==='student'){
+  const s=studentStats();
+  return pageHead('سجل الحضور والغياب','عرض السجل الفردي للطالب التجريبي وحالات المحاضرات.')+
+  `<div class="stats">${stat('إجمالي السجلات',s.total,'▦','كل المقررات')}${stat('حاضر',s.attended,'✓','حضور مسجل','green')}${stat('غائب',s.absent,'!','غياب مسجل','red')}${stat('معذور',s.excused,'◇','حالات بعذر','amber')}</div><section class="panel"><div class="panel-head"><h3>تفاصيل السجل</h3><span class="badge blue">قراءة فقط للطالب</span></div>${recordsTable(s.records)}</section>`;
+ }
+ const rec=state.attendance;
+ return pageHead('سجل الحضور والغياب','مراجعة حالات الحضور المسجلة وتعديلها ضمن صلاحية عضو هيئة التدريس.')+
+ `<section class="panel"><div class="panel-head"><h3>السجلات المسجلة</h3><button class="primary" data-goto="session">＋ تسجيل حالات جلسة</button></div>${recordsTable(rec,'instructor')}</section>`;
+}
+function pageCourses(){
+ const showTeacher=currentRole!=='student';
+ return pageHead(currentRole==='student'?'مقرراتي':'المقررات','قائمة المقررات والشعب المرتبطة بها في النموذج التجريبي.')+
+ `<section class="panel"><div class="panel-head"><h3>قائمة المقررات</h3>${currentRole==='admin'?'<button class="primary" data-action="add-course">＋ إضافة مقرر</button>':''}</div><div class="table-wrap"><table><thead><tr><th>رمز المقرر</th><th>اسم المقرر</th><th>الشعبة</th>${showTeacher?'<th>عضو هيئة التدريس</th>':'<th>نسبة الغياب</th>'}<th>المحاضرات</th>${currentRole==='instructor'?'<th>إجراء</th>':''}</tr></thead><tbody>${state.courses.map(c=>`<tr><td>${esc(c.id)}</td><td>${esc(c.name)}</td><td>${esc(c.section)}</td>${showTeacher?`<td>${esc(c.instructor)}</td>`:`<td>${studentStats(c.id).percent}%</td>`}<td>${c.lectures}</td>${currentRole==='instructor'?`<td><button class="table-action" data-start-course="${esc(c.id)}">فتح التحضير</button></td>`:''}</tr>`).join('')}</tbody></table></div></section>`;
+}
+function pageSession(){
+ if(currentRole==='student')return pageHead('تسجيل الحضور','تتيح النسخة التعليمية محاكاة إدخال رمز جلسة التحضير.')+
+ `<section class="panel center"><h3>التحقق من جلسة المحاضرة</h3><p class="muted">اختر المقرر ثم أدخل رمز QR التجريبي الظاهر لدى عضو هيئة التدريس.</p><div class="form-grid" style="text-align:right;max-width:600px;margin:18px auto"><div class="form-field"><label for="studentCourse">المقرر</label><select id="studentCourse" class="field">${state.courses.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('')}</select></div><div class="form-field"><label for="qrInput">رمز الجلسة</label><input id="qrInput" class="field ltr" placeholder="مثال: 482731"></div></div><button class="primary" data-action="submit-qr">التحقق وتسجيل الحضور</button><p class="small">رمز العرض التجريبي: 482731. لا يتم التحقق من الكاميرا أو خادم خارجي.</p></section>`;
+ return pageHead('جلسة التحضير','افتح جلسة للمقرر ثم راجع قائمة الطلاب واحفظ حالاتهم.')+
+ `<div class="grid2"><section class="panel"><h3>إعداد الجلسة</h3><div class="form-grid" style="margin-top:16px"><div class="form-field"><label for="sessionCourse">المقرر</label><select class="field" id="sessionCourse">${state.courses.map(c=>`<option value="${esc(c.id)}">${esc(c.name)} (${esc(c.id)})</option>`).join('')}</select></div><div class="form-field"><label for="sessionLecture">رقم المحاضرة</label><input class="field" id="sessionLecture" value="المحاضرة 11"></div></div><div class="form-actions"><button class="primary" data-action="open-session">فتح جلسة التحضير</button></div><div id="sessionMessage" class="muted" style="margin-top:12px">لم تُفتح جلسة بعد.</div></section><section class="panel center"><h3>رمز QR للجلسة</h3><div class="qr-box"><span id="qrCode">482731</span></div><div class="badge amber">رمز تجريبي للعرض فقط</div><p class="muted">يُستخدم توضيحيًا لتمثيل خيار التحقق الوارد في التقرير. لا ينشئ هذا النموذج رمز QR فعليًا.</p></section></div>
+ <section class="panel"><div class="panel-head"><h3>قائمة الطلاب وحالات الحضور</h3><button class="primary" data-action="save-session">حفظ حالات الحضور</button></div><div class="table-wrap"><table><thead><tr><th>الرقم الجامعي</th><th>اسم الطالب</th><th>البريد</th><th>حالة الحضور</th></tr></thead><tbody id="sessionRoster">${renderRosterRows()}</tbody></table></div></section>`;
+}
+function renderRosterRows(){return state.students.map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${esc(s.email)}</td><td><select class="field roster-status" data-student="${esc(s.id)}" style="padding:7px;max-width:150px"><option>حاضر</option><option>غائب</option><option>معذور</option></select></td></tr>`).join('')}
+function pageAlerts(){return pageHead('التنبيهات','مراجعة تنبيهات الغياب الناتجة عن السجلات والإعدادات التجريبية.')+`<section class="panel"><div class="panel-head"><h3>حالة المقررات</h3></div>${studentAlertMarkup()}${state.courses.map(c=>`<div class="course-row"><div class="course-icon">♢</div><div class="course-info"><b>${esc(c.name)}</b><small>نسبة الغياب المسجلة: ${studentStats(c.id).percent}%</small></div>${studentStats(c.id).percent>=state.threshold?'<span class="badge red">يتطلب الانتباه</span>':'<span class="badge green">ضمن الحد التجريبي</span>'}</div>`).join('')}</section>`}
+function pageReports(){
+ const total=state.attendance.length, present=state.attendance.filter(a=>a.status==='حاضر').length, absent=state.attendance.filter(a=>a.status==='غائب').length, excused=state.attendance.filter(a=>a.status==='معذور').length;
+ return pageHead('تقارير الحضور والغياب','ملخص قابل للتصفية والتصدير لبيانات العرض التجريبي.',`<button class="primary" data-action="export-report">↓ تصدير CSV</button>`)+
+ `<div class="stats">${stat('إجمالي السجلات',total,'▦','كل السجلات')}${stat('حاضر',present,'✓','حالات حضور','green')}${stat('غائب',absent,'!','حالات غياب','red')}${stat('معذور',excused,'◇','حالات بعذر','amber')}</div><section class="panel"><div class="panel-head"><h3>ملخص حسب المقرر</h3></div><div class="table-wrap"><table><thead><tr><th>المقرر</th><th>عدد السجلات</th><th>حاضر</th><th>غائب</th><th>معذور</th></tr></thead><tbody>${state.courses.map(c=>{const a=state.attendance.filter(x=>x.courseId===c.id);return `<tr><td>${esc(c.name)}</td><td>${a.length}</td><td>${a.filter(x=>x.status==='حاضر').length}</td><td>${a.filter(x=>x.status==='غائب').length}</td><td>${a.filter(x=>x.status==='معذور').length}</td></tr>`}).join('')}</tbody></table></div><p class="small">تُصدر النسخة ملف CSV من البيانات الحالية في المتصفح، ويمكن فتحه باستخدام برامج الجداول.</p></section>`;
+}
+function pageManagement(){
+ return pageHead('إدارة البيانات','إضافة طالب تجريبي أو مراجعة بيانات الطلاب. هذه الواجهة محاكاة إدارية.')+
+ `<section class="panel"><div class="panel-head"><h3>إضافة طالب</h3><span class="badge blue">للمسؤول</span></div><form id="studentForm"><div class="form-grid"><div class="form-field"><label for="newStudentId">الرقم الجامعي</label><input id="newStudentId" class="field" required placeholder="مثال: 4400001"></div><div class="form-field"><label for="newStudentName">اسم الطالب</label><input id="newStudentName" class="field" required placeholder="الاسم الكامل"></div><div class="form-field"><label for="newStudentEmail">البريد الجامعي</label><input id="newStudentEmail" class="field" required placeholder="student@university.edu"></div><div class="form-field"><label for="newStudentCourse">المقرر</label><select id="newStudentCourse" class="field">${state.courses.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('')}</select></div></div><div class="form-actions"><button type="submit" class="primary">حفظ بيانات الطالب</button></div></form></section><section class="panel"><div class="panel-head"><h3>بيانات الطلاب</h3><span class="muted">${state.students.length} سجلات</span></div><div class="table-wrap"><table><thead><tr><th>الرقم الجامعي</th><th>اسم الطالب</th><th>البريد</th><th>المقرر</th><th>إجراء</th></tr></thead><tbody>${state.students.map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${esc(s.course||'—')}</td><td><button class="table-action" data-remove-student="${esc(s.id)}">حذف تجريبي</button></td></tr>`).join('')}</tbody></table></div><p class="small">لا تُحذف بيانات المثال الأساسية من أي خادم؛ التعديلات تحفظ محليًا في هذا المتصفح.</p></section>`;
+}
+function pageSettings(){return pageHead('إعدادات النظام','ضبط حد الغياب وتشغيل التنبيهات وفق اللوائح المعتمدة من الجامعة.')+`<section class="panel"><h3>التنبيهات وحد الغياب</h3><form id="settingsForm" style="max-width:620px;margin-top:18px"><div class="form-grid"><div class="form-field"><label for="threshold">حد الغياب التجريبي (%)</label><input id="threshold" type="number" min="1" max="100" value="${Number(state.threshold)}" class="field" required><div class="small">قيمة توضيحية؛ يجب اعتمادها وفق اللوائح.</div></div><div class="form-field"><label for="alertsEnabled">التنبيهات</label><select id="alertsEnabled" class="field"><option value="true" ${state.alertsEnabled?'selected':''}>مفعلة</option><option value="false" ${!state.alertsEnabled?'selected':''}>معطلة</option></select></div></div><div class="form-actions"><button type="submit" class="primary">حفظ الإعدادات</button></div></form><div class="alert info" style="margin-top:20px">لم يحدد التقرير حدًا رقميًا ثابتًا؛ لذا جعلته قابلًا للتعديل بدل تثبيت نسبة غير معتمدة.</div></section>`}
+function renderPage(){
+ const pages={home:()=>currentRole==='student'?homeStudent():currentRole==='instructor'?homeInstructor():homeAdmin(),attendance:pageAttendance,courses:pageCourses,alerts:pageAlerts,session:pageSession,reports:pageReports,management:pageManagement,settings:pageSettings};
+ $('content').innerHTML=(pages[currentPage]||pages.home)();
+ bindPageEvents();
+}
+function goto(page){currentPage=page;renderNav();renderPage();window.scrollTo({top:0,behavior:'smooth'})}
+function bindPageEvents(){
+ document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>goto(b.dataset.goto)));
+ document.querySelectorAll('[data-start-course]').forEach(b=>b.addEventListener('click',()=>{goto('session');setTimeout(()=>{const sel=$('sessionCourse');if(sel)sel.value=b.dataset.startCourse;},0)}));
+ document.querySelectorAll('[data-edit-attendance]').forEach(b=>b.addEventListener('click',()=>{
+  const [studentId,courseId,lecture]=b.dataset.editAttendance.split('|');const item=state.attendance.find(a=>a.studentId===studentId&&a.courseId===courseId&&a.lecture===lecture);if(!item)return;
+  const status=prompt('أدخل الحالة الجديدة: حاضر أو غائب أو معذور',item.status);if(['حاضر','غائب','معذور'].includes(status)){item.status=status;persist();renderPage();showToast('تم تحديث الحالة في بيانات العرض التجريبي.')}else if(status!==null)showToast('الحالة غير معتمدة. استخدم: حاضر أو غائب أو معذور.');
+ }));
+ document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>handleAction(b.dataset.action)));
+ document.querySelectorAll('[data-remove-student]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.removeStudent;if(!confirm('هل تريد حذف هذا الطالب من بيانات العرض التجريبي؟'))return;state.students=state.students.filter(s=>s.id!==id);state.attendance=state.attendance.filter(a=>a.studentId!==id);persist();renderPage();showToast('تم حذف سجل المثال محليًا.')}));
+ const sf=$('studentForm');if(sf)sf.addEventListener('submit',e=>{e.preventDefault();const id=$('newStudentId').value.trim(),name=$('newStudentName').value.trim(),email=$('newStudentEmail').value.trim(),course=$('newStudentCourse').value;if(!id||!name||!email){showToast('يرجى إكمال الحقول المطلوبة.');return}if(state.students.some(s=>s.id===id)){showToast('الرقم الجامعي مستخدم بالفعل.');return}state.students.push({id,name,email,course});persist();renderPage();showToast('تم حفظ الطالب في نسخة العرض التجريبي.')} );
+ const settings=$('settingsForm');if(settings)settings.addEventListener('submit',e=>{e.preventDefault();const n=Number($('threshold').value);if(!Number.isFinite(n)||n<1||n>100){showToast('أدخل نسبة بين 1 و100.');return}state.threshold=n;state.alertsEnabled=$('alertsEnabled').value==='true';persist();renderPage();showToast('تم حفظ إعدادات العرض التجريبي.')} );
+}
+function handleAction(action){
+ if(action==='open-session'){$('sessionMessage').innerHTML='<span class="badge green">الجلسة مفتوحة</span> تم فتح الجلسة التجريبية ويمكن مراجعة الحالات ثم حفظها.';$('qrCode').textContent='482731';showToast('تم فتح جلسة التحضير التجريبية.');}
+ else if(action==='save-session'){
+  const courseId=$('sessionCourse')?.value||'IS321',lecture=$('sessionLecture')?.value.trim()||'المحاضرة 11';const date=new Date().toISOString().slice(0,10);
+  document.querySelectorAll('.roster-status').forEach(sel=>{const studentId=sel.dataset.student;const existing=state.attendance.find(a=>a.studentId===studentId&&a.courseId===courseId&&a.lecture===lecture);if(existing)existing.status=sel.value;else state.attendance.push({studentId,courseId,lecture,date,status:sel.value});});persist();renderPage();showToast('تم حفظ حالات الحضور محليًا في النموذج التجريبي.');
+ }else if(action==='submit-qr'){
+  if($('qrInput').value.trim()!=='482731'){showToast('رمز الجلسة غير صحيح. استخدم 482731 للعرض.');return}const courseId=$('studentCourse').value,me=getStudent().id,lecture='جلسة QR تجريبية',date=new Date().toISOString().slice(0,10);const existing=state.attendance.find(a=>a.studentId===me&&a.courseId===courseId&&a.lecture===lecture);if(existing)existing.status='حاضر';else state.attendance.push({studentId:me,courseId,lecture,date,status:'حاضر'});persist();showToast('تم تسجيل حضور تجريبي بنجاح.');goto('attendance');
+ }else if(action==='export-report')exportCSV();else if(action==='add-course'){
+  const id=prompt('رمز المقرر الجديد (مثال IS350):');if(!id)return;const name=prompt('اسم المقرر:');if(!name)return;if(state.courses.some(c=>c.id===id)){showToast('رمز المقرر موجود بالفعل.');return}state.courses.push({id:id.trim(),name:name.trim(),section:'شعبة 1',instructor:'عضو هيئة تدريس تجريبي',lectures:0,absent:0});persist();renderPage();showToast('تمت إضافة مقرر تجريبي.');
+ }
+}
+function exportCSV(){
+ const header=['الرقم الجامعي','اسم الطالب','رمز المقرر','المقرر','المحاضرة','التاريخ','الحالة'];const lines=[header,...state.attendance.map(a=>{const s=state.students.find(x=>x.id===a.studentId)||{id:a.studentId,name:''};const c=state.courses.find(x=>x.id===a.courseId)||{name:a.courseId};return [s.id,s.name,a.courseId,c.name,a.lecture,a.date,a.status]})];const csv='\uFEFF'+lines.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));const a=document.createElement('a');a.href=url;a.download='تقرير_الحضور_والغياب.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);showToast('تم تنزيل التقرير التجريبي بصيغة CSV.');
+}
+// Default credentials make it easy to demonstrate the prototype; there is no backend authentication.
 </script>
 </body>
 </html>
